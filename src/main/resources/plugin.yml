@@ -1,0 +1,11 @@
+name: Leaderboards
+version: @version@
+
+main: pink.zak.mc.leaderboards.LeaderboardPlugin
+api-version: 1.13
+
+author: "Zak Shearman"
+website: www.zakshearman.com
+
+softdepend:
+  - PlaceholderAPI

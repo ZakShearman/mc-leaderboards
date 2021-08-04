@@ -1,0 +1,34 @@
+redis:
+  address: localhost # (default: localhost)
+  port: 6379 # (default: 3306)
+  prefix: "mc-leaderboards:" # (default: mc-leaderboards:)
+
+  update-period: 60 # seconds, how often leaderboards are updated (default: 60)
+
+leaderboards:
+  "carrot-mines":
+    type: "STATISTIC"
+    properties:
+      statistic: "MINE_BLOCK"
+      material: "CARROTS"
+    min-value: 1000
+  "zombie-kills":
+    type: "STATISTIC"
+    properties:
+      statistic: "KILL_ENTITY"
+      entity: "ZOMBIE"
+    min-value: 1000
+  #"something-placeholder":
+  #  type: "PLACEHOLDER_API"
+  #  properties:
+  #    placeholder: "idk_kills"
+  #  min-value: 1000
+
+
+save-uuids:
+  # Whether or not UUIDs to be updated will be saved to a file.
+  # If your redis update period is frequent, it may be unnecessary to save this to a file
+  # If your redis update period is not frequent (e.g every hour), if your server crashes or is restarted,
+  #   some users may not be updated until the next time redis is updated and they were online beforehand.
+  enabled: true # (default: true)
+  update-period: 300 # seconds (default: 300)
