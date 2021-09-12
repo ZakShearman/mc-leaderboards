@@ -22,7 +22,7 @@ leaderboards:
   #  type: "PLACEHOLDER_API"
   #  properties:
   #    placeholder: "idk_kills"
-  #  require-online
+  #  require-online: true
   #  min-value: 1000
 
 
