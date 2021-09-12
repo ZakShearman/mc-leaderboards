@@ -7,13 +7,15 @@ import org.bukkit.entity.EntityType;
 public class Leaderboard {
     private final String identifier;
     private final int minValue;
+    private final boolean requireOnline;
     private final TrackingType trackingType;
     private final StatisticInfo statisticInfo;
     private final String placeholder;
 
-    public Leaderboard(String identifier, int minValue, TrackingType trackingType, StatisticInfo statisticInfo, String placeholder) {
+    public Leaderboard(String identifier, int minValue, boolean requireOnline, TrackingType trackingType, StatisticInfo statisticInfo, String placeholder) {
         this.identifier = identifier;
         this.minValue = minValue;
+        this.requireOnline = requireOnline;
         this.trackingType = trackingType;
         this.statisticInfo = statisticInfo;
         this.placeholder = placeholder;
@@ -25,6 +27,10 @@ public class Leaderboard {
 
     public int getMinValue() {
         return this.minValue;
+    }
+
+    public boolean isRequireOnline() {
+        return this.requireOnline;
     }
 
     public TrackingType getTrackingType() {

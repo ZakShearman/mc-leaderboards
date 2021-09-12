@@ -5,6 +5,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
+import org.bukkit.entity.Player;
 import pink.zak.mc.leaderboards.cache.LeaderboardCache;
 import pink.zak.mc.leaderboards.model.Leaderboard;
 import pink.zak.mc.leaderboards.storage.RedisStorage;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class LeaderboardUpdater {
     private final UserUpdateStorage userUpdateStorage;
@@ -32,12 +34,13 @@ public class LeaderboardUpdater {
 
     private void update() {
         Set<UUID> uuids = this.userUpdateStorage.getUuids();
+        Set<UUID> onlineUuids = Bukkit.getOnlinePlayers().stream().map(Player::getUniqueId).collect(Collectors.toSet());
         for (Leaderboard leaderboard : this.leaderboardCache.getLeaderboards().values()) {
             Map<UUID, Integer> values;
             if (leaderboard.getTrackingType() == Leaderboard.TrackingType.PLACEHOLDER_API)
-                values = this.getPlaceholderValues(leaderboard, uuids); // todo cant use identifier
+                values = this.getPlaceholderValues(leaderboard, leaderboard.isRequireOnline() ? onlineUuids : uuids); // todo cant use identifier
             else
-                values = this.getStatisticValues(leaderboard, uuids);
+                values = this.getStatisticValues(leaderboard, leaderboard.isRequireOnline() ? onlineUuids : uuids);
             this.redisStorage.addUsers(leaderboard.getIdentifier(), values);
         }
     }

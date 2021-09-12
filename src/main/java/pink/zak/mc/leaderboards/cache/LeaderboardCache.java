@@ -19,11 +19,12 @@ public class LeaderboardCache {
         ConfigLoader.reader(settings).keyLoop("leaderboards", identifier -> {
             String path = "leaderboards." + identifier + ".";
             int minValue = settings.integer(path + "min-value");
+            boolean requireOnline = settings.bool(path + "require-online");
             Leaderboard.TrackingType trackingType = Leaderboard.TrackingType.valueOf(settings.string(path + "type"));
             Leaderboard.StatisticInfo statisticInfo = trackingType == Leaderboard.TrackingType.STATISTIC ? this.createStatisticInfo(settings, path) : null;
             String placeholder = trackingType == Leaderboard.TrackingType.PLACEHOLDER_API ? settings.string(path + "properties.placeholder") : null;
 
-            Leaderboard leaderboard = new Leaderboard(identifier, minValue, trackingType, statisticInfo, placeholder);
+            Leaderboard leaderboard = new Leaderboard(identifier, minValue, requireOnline, trackingType, statisticInfo, placeholder);
             this.leaderboards.put(identifier, leaderboard);
         });
     }

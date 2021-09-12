@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class UserUpdateStorage implements Listener {
-    private final Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
     private final Path path;
     private Set<UUID> uuids;
 
@@ -73,7 +73,7 @@ public class UserUpdateStorage implements Listener {
         }
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(reader).getAsJsonObject();
-        return this.gson.fromJson(jsonObject.get("").getAsString(), new TypeToken<HashSet<UUID>>(){}.getType());
+        return this.GSON.fromJson(jsonObject.get("").getAsString(), new TypeToken<HashSet<UUID>>(){}.getType());
     }
 
     private void save() {
@@ -86,8 +86,8 @@ public class UserUpdateStorage implements Listener {
         }
         try (Writer writer = Files.newBufferedWriter(this.path)){
             JsonObject json = new JsonObject();
-            json.addProperty("", this.gson.toJson(this.uuids));
-            this.gson.toJson(json, writer);
+            json.addProperty("", this.GSON.toJson(this.uuids));
+            this.GSON.toJson(json, writer);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
