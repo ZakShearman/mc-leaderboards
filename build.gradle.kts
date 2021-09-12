@@ -8,6 +8,11 @@ plugins {
 group = "pink.zak.mc"
 version = "1.1.0"
 
+java {
+    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
